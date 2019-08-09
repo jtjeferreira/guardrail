@@ -408,18 +408,18 @@ object PlayJsonProtocolGenerator {
       case PackageObjectContents() =>
         Target.pure(
           List(
-            q"implicit val guardrailDecodeInstant: Reads[Instant] = ??? //Reads[Instant].or(Reads[Long].map(Instant.ofEpochMilli))",
-            q"implicit val guardrailDecodeLocalDate: Reads[LocalDate] = ??? //Reads[LocalDate].or(Reads[Instant].map(_.atZone(ZoneOffset.UTC).toLocalDate))",
-            q"implicit val guardrailDecodeLocalDateTime: Reads[LocalDateTime] = ??? //Reads[LocalDateTime]",
-            q"implicit val guardrailDecodeLocalTime: Reads[LocalTime] = ??? //Reads[LocalTime]",
-            q"implicit val guardrailDecodeOffsetDateTime: Reads[OffsetDateTime] = ??? //Reads[OffsetDateTime].or(Reads[Instant].map(_.atZone(ZoneOffset.UTC).toOffsetDateTime))",
-            q"implicit val guardrailDecodeZonedDateTime: Reads[ZonedDateTime] = ??? //Reads[ZonedDateTime]",
-            q"implicit val guardrailEncodeInstant: Writes[Instant] = ??? //Writes[Instant]",
-            q"implicit val guardrailEncodeLocalDate: Writes[LocalDate] = ??? //Writes[LocalDate]",
-            q"implicit val guardrailEncodeLocalDateTime: Writes[LocalDateTime] = ??? //Writes[LocalDateTime]",
-            q"implicit val guardrailEncodeLocalTime: Writes[LocalTime] = ??? //Writes[LocalTime]",
-            q"implicit val guardrailEncodeOffsetDateTime: Writes[OffsetDateTime] = ??? //Writes[OffsetDateTime]",
-            q"implicit val guardrailEncodeZonedDateTime: Writes[ZonedDateTime] = ??? //Writes[ZonedDateTime]"
+            q"implicit val guardrailDecodeInstant: Reads[Instant] = implicitly[Reads[Instant]].orElse(implicitly[Reads[Long]].map(Instant.ofEpochMilli))",
+            q"implicit val guardrailDecodeLocalDate: Reads[LocalDate] = implicitly[Reads[LocalDate]].orElse(implicitly[Reads[Instant]].map(_.atZone(ZoneOffset.UTC).toLocalDate))",
+            q"implicit val guardrailDecodeLocalDateTime: Reads[LocalDateTime] = implicitly[Reads[LocalDateTime]]",
+            q"implicit val guardrailDecodeLocalTime: Reads[LocalTime] = implicitly[Reads[LocalTime]]",
+            q"implicit val guardrailDecodeOffsetDateTime: Reads[OffsetDateTime] = implicitly[Reads[OffsetDateTime]].orElse(implicitly[Reads[Instant]].map(_.atZone(ZoneOffset.UTC).toOffsetDateTime))",
+            q"implicit val guardrailDecodeZonedDateTime: Reads[ZonedDateTime] = implicitly[Reads[ZonedDateTime]]",
+            q"implicit val guardrailEncodeInstant: Writes[Instant] = implicitly[Writes[Instant]]",
+            q"implicit val guardrailEncodeLocalDate: Writes[LocalDate] = implicitly[Writes[LocalDate]]",
+            q"implicit val guardrailEncodeLocalDateTime: Writes[LocalDateTime] = implicitly[Writes[LocalDateTime]]",
+            q"implicit val guardrailEncodeLocalTime: Writes[LocalTime] = implicitly[Writes[LocalTime]]",
+            q"implicit val guardrailEncodeOffsetDateTime: Writes[OffsetDateTime] = implicitly[Writes[OffsetDateTime]]",
+            q"implicit val guardrailEncodeZonedDateTime: Writes[ZonedDateTime] = implicitly[Writes[ZonedDateTime]]"
           )
         )
     }
