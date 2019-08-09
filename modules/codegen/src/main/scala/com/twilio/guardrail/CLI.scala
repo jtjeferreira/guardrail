@@ -178,7 +178,7 @@ trait CLICommon {
 }
 
 object CLI extends CLICommon {
-  import com.twilio.guardrail.generators.{ AkkaHttp, Endpoints, Http4s }
+  import com.twilio.guardrail.generators.{ AkkaHttp, Endpoints, Http4s, Play}
   import com.twilio.guardrail.generators.Java
   import scala.meta._
   val scalaInterpreter = CoreTermInterp[ScalaLanguage](
@@ -186,6 +186,7 @@ object CLI extends CLICommon {
       case "akka-http" => AkkaHttp
       case "endpoints" => Endpoints
       case "http4s"    => Http4s
+      case "play"      => Play
     }, {
       _.parse[Importer].toEither.bimap(err => UnparseableArgument("import", err.toString), importer => Import(List(importer)))
     }

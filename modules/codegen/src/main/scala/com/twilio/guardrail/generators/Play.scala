@@ -6,11 +6,11 @@ import cats.~>
 
 import AkkaHttpClientGenerator._
 import AkkaHttpServerGenerator._
-import CirceProtocolGenerator._
+import PlayJsonProtocolGenerator._
 import ScalaGenerator._
-import AkkaHttpCirceGenerator._
+import AkkaHttpPlayJsonGenerator._
 
-object AkkaHttp extends (CodegenApplication[ScalaLanguage, ?] ~> Target) {
+object Play extends (CodegenApplication[ScalaLanguage, ?] ~> Target) {
   val interpDefinitionPM: DefinitionPM[ScalaLanguage, ?] ~> Target       = ProtocolSupportTermInterp or ModelProtocolTermInterp
   val interpDefinitionPME: DefinitionPME[ScalaLanguage, ?] ~> Target     = EnumProtocolTermInterp or interpDefinitionPM
   val interpDefinitionPMEA: DefinitionPMEA[ScalaLanguage, ?] ~> Target   = ArrayProtocolTermInterp or interpDefinitionPME

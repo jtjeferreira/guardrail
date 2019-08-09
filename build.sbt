@@ -14,6 +14,7 @@ val akkaVersion       = "10.0.14"
 val catsVersion       = "1.4.0"
 val catsEffectVersion = "1.0.0"
 val circeVersion      = "0.10.1"
+val playJsonVersion   = "2.7.3"
 val http4sVersion     = "0.20.0"
 val scalatestVersion  = "3.0.8"
 val javaparserVersion = "3.7.1"
@@ -72,7 +73,8 @@ val exampleFrameworkSuites = Map(
   "scala" -> List(
     ("akka-http", "akkaHttp", List("client", "server")),
     ("endpoints", "endpoints", List("client")),
-    ("http4s", "http4s", List("client", "server"))
+    ("http4s", "http4s", List("client", "server")),
+    ("play", "play", List("server"))
   ),
   "java" -> List(
     ("dropwizard", "dropwizard", List("client", "server"))
@@ -245,6 +247,21 @@ lazy val akkaHttpSample = (project in file("modules/sample-akkaHttp"))
       "io.circe"          %% "circe-generic"     % circeVersion,
       "io.circe"          %% "circe-java8"       % circeVersion,
       "io.circe"          %% "circe-parser"      % circeVersion,
+      "org.scalatest"     %% "scalatest"         % scalatestVersion % Test,
+      "org.typelevel"     %% "cats-core"         % catsVersion
+    ),
+    unmanagedSourceDirectories in Compile += baseDirectory.value / "target" / "generated",
+    skip in publish := true,
+    scalafmtOnCompile := false
+  )
+
+lazy val playSample = (project in file("modules/sample-play"))
+  .settings(
+    codegenSettings,
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-http"         % akkaVersion,
+      "com.typesafe.akka" %% "akka-http-testkit" % akkaVersion,
+      "com.typesafe.play" %% "play-json"         % playJsonVersion,
       "org.scalatest"     %% "scalatest"         % scalatestVersion % Test,
       "org.typelevel"     %% "cats-core"         % catsVersion
     ),
